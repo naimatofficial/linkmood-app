@@ -16,18 +16,21 @@ import { Button } from "@/components/ui/button";
 
 import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
 	useCreateUserAccount,
 	useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
 	const { toast } = useToast();
+	const navigate = useNavigate();
 	const { mutateAsync: createUserAccount, isPending: isUserCreating } =
 		useCreateUserAccount();
 	const { mutateAsync: signInAccount, isPending: isSigningIn } =
 		useSignInAccount();
+	const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
 	const form = useForm<z.infer<typeof SignupValidation>>({
 		resolver: zodResolver(SignupValidation),
@@ -57,6 +60,18 @@ const SignupForm = () => {
 		if (!session) {
 			return toast({
 				title: "Sign in failed!, Please try agian.",
+			});
+		}
+
+		const isLoggedIn = await checkAuthUser();
+
+		if (isLoggedIn) {
+			form.reset();
+
+			navigate("/");
+		} else {
+			toast({
+				title: "Sign up failed!, Please try agian.",
 			});
 		}
 	}

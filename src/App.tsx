@@ -4,9 +4,20 @@ import "./globals.css";
 import { Routes, Route } from "react-router-dom";
 import SigninForm from "./_auth/forms/SigninForm";
 import SignupForm from "./_auth/forms/SignupForm";
-import { Home } from "./_root/pages";
+import {
+	AllUsers,
+	CreatePost,
+	Explore,
+	Home,
+	LikedPosts,
+	PostDetails,
+	Profile,
+	Saved,
+	UpdateProfile,
+} from "./_root/pages";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
+import EditPost from "./_root/pages/EditPost";
 
 const App = () => {
 	return (
@@ -21,6 +32,15 @@ const App = () => {
 				{/* Private Routes */}
 				<Route element={<RootLayout />}>
 					<Route index element={<Home />} />
+					<Route path="/explore" element={<Explore />} />
+					<Route path="/all-users" element={<AllUsers />} />
+					<Route path="/create-post" element={<CreatePost />} />
+					<Route path="/posts/:id" element={<PostDetails />} />
+					<Route path="/edit-post" element={<EditPost />} />
+					<Route path="/liked-post" element={<LikedPosts />} />
+					<Route path="/saved" element={<Saved />} />
+					<Route path="/profile" element={<Profile />} />
+					<Route path="/update-profile" element={<UpdateProfile />} />
 				</Route>
 			</Routes>
 

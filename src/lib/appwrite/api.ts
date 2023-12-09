@@ -40,8 +40,8 @@ export const saveUserToDB = async (user: {
 	accountId: string;
 	name: string;
 	email: string;
-	username?: string;
 	imageUrl: URL;
+	username?: string;
 }) => {
 	try {
 		// Create a new user in User's Collection
@@ -65,9 +65,20 @@ export const signInAccount = async (user: {
 	try {
 		const session = await account.createEmailSession(user.email, user.password);
 
-		if (!session) throw Error;
-
+		// if (!session) throw Error;
 		return session;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const getAccount = async () => {
+	try {
+		const currentAccount = await account.get();
+
+		if (!currentAccount) throw Error;
+
+		return currentAccount;
 	} catch (error) {
 		console.error(error);
 	}
@@ -75,7 +86,7 @@ export const signInAccount = async (user: {
 
 export const getCurrentUser = async () => {
 	try {
-		const currentAccount = await account.get();
+		const currentAccount = await getAccount();
 
 		if (!currentAccount) throw Error;
 
@@ -87,7 +98,20 @@ export const getCurrentUser = async () => {
 
 		if (!currentUser) throw Error;
 
+		console.log("current user", currentUser);
+
 		return currentUser.documents[0];
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+};
+
+export const signOutAccount = async () => {
+	try {
+		const session = await account.deleteSession("current");
+
+		return session;
 	} catch (error) {
 		console.error(error);
 	}

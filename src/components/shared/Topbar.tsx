@@ -15,7 +15,7 @@ const Topbar = () => {
 	useEffect(() => {
 		// if sign out success then navigate the sign in page
 		if (isSuccess) navigate(0);
-	}, [isSuccess]);
+	}, [isSuccess, navigate]);
 
 	console.log(user);
 

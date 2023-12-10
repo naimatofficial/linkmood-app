@@ -79,7 +79,7 @@ const SignupForm = () => {
 		<Form {...form}>
 			<div className="sm:w-420 flex-center flex-col">
 				<img src="/assets/images/logo.svg" alt="logo" />
-				<h2 className="h3-bold sm:h2-bold pt-5 sm:pt-12">
+				<h2 className="h3-bold sm:h2-bold pt-5 sm:pt-2">
 					Create a new account
 				</h2>
 				<p className="text-light-3 small-medium md:base-regular">
@@ -87,7 +87,7 @@ const SignupForm = () => {
 				</p>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
-					className="flex flex-col w-full gap-5 mt-4 "
+					className="flex flex-col w-full gap-4 mt-3"
 				>
 					<FormField
 						control={form.control}
@@ -98,7 +98,7 @@ const SignupForm = () => {
 								<FormControl>
 									<Input type="text" className="shad-input" {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="shad-form_message" />
 							</FormItem>
 						)}
 					/>
@@ -111,7 +111,7 @@ const SignupForm = () => {
 								<FormControl>
 									<Input type="text" className="shad-input" {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="shad-form_message" />
 							</FormItem>
 						)}
 					/>
@@ -124,7 +124,7 @@ const SignupForm = () => {
 								<FormControl>
 									<Input type="text" className="shad-input" {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="shad-form_message" />
 							</FormItem>
 						)}
 					/>
@@ -137,7 +137,7 @@ const SignupForm = () => {
 								<FormControl>
 									<Input type="password" className="shad-input" {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="shad-form_message" />
 							</FormItem>
 						)}
 					/>

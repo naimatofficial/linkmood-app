@@ -5,8 +5,6 @@ import { account, appwriteConfig, avatars, databases, storage } from "./config";
 
 export const createUserAccount = async (user: INewUser) => {
 	try {
-		console.log(user);
-
 		// Auth a user using appwrite
 		const newAccount = await account.create(
 			ID.unique(),
@@ -125,7 +123,10 @@ export const signOutAccount = async () => {
 export async function createPost(post: INewPost) {
 	try {
 		// Upload file to appwrite storage
+		console.log(post);
 		const uploadedFile = await uploadFile(post.file[0]);
+
+		console.log(uploadFile);
 
 		if (!uploadedFile) throw Error;
 
@@ -135,6 +136,8 @@ export async function createPost(post: INewPost) {
 			await deleteFile(uploadedFile.$id);
 			throw Error;
 		}
+
+		console.log(fileUrl);
 
 		// Convert tags into array
 		const tags = post.tags?.replace(/ /g, "").split(",") || [];
@@ -153,6 +156,7 @@ export async function createPost(post: INewPost) {
 				tags: tags,
 			}
 		);
+		console.log(newPost);
 
 		if (!newPost) {
 			await deleteFile(uploadedFile.$id);
@@ -212,6 +216,23 @@ export async function deleteFile(fileId: string) {
 }
 
 // ============================== GET POSTS
+
+export const getRecentPosts = async () => {
+	try {
+		const posts = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.postCollectionId,
+			[Query.orderDesc("$createdAt"), Query.limit(20)]
+		);
+
+		if (!posts) throw Error;
+
+		return posts;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export async function searchPosts(searchTerm: string) {
 	try {
 		const posts = await databases.listDocuments(

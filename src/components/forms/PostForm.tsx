@@ -16,12 +16,20 @@ import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
 import { PostValidation } from "@/lib/validation";
 import { Models } from "appwrite";
+import { createPost } from "@/lib/appwrite/api";
+import { useUserContext } from "@/context/AuthContext";
+import { useToast } from "../ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 type PostFormProps = {
 	post?: Models.Document;
 };
 
 const PostForm = ({ post }: PostFormProps) => {
+	const { user } = useUserContext();
+	const { toast } = useToast();
+	const navigate = useNavigate();
+
 	const form = useForm<z.infer<typeof PostValidation>>({
 		resolver: zodResolver(PostValidation),
 		defaultValues: {
@@ -35,6 +43,18 @@ const PostForm = ({ post }: PostFormProps) => {
 	function onSubmit(values: z.infer<typeof PostValidation>) {
 		// Do something with the form values.
 		console.log(values);
+		const newPost = createPost({
+			...values,
+			userId: user?.id,
+		});
+
+		if (!newPost) {
+			return toast({
+				title: "Please try agian.",
+			});
+		}
+
+		navigate("/");
 	}
 
 	return (

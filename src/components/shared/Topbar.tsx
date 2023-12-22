@@ -10,14 +10,10 @@ const Topbar = () => {
 
 	const { mutate: signOut, isSuccess } = useSignOutAccount();
 
-	console.log(isSuccess);
-
 	useEffect(() => {
 		// if sign out success then navigate the sign in page
 		if (isSuccess) navigate(0);
 	}, [isSuccess, navigate]);
-
-	console.log(user);
 
 	return (
 		<section className="topbar">

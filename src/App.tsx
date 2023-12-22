@@ -35,8 +35,8 @@ const App = () => {
 					<Route path="/explore" element={<Explore />} />
 					<Route path="/all-users" element={<AllUsers />} />
 					<Route path="/create-post" element={<CreatePost />} />
+					<Route path="/edit-post/:id" element={<EditPost />} />
 					<Route path="/posts/:id" element={<PostDetails />} />
-					<Route path="/edit-post" element={<EditPost />} />
 					<Route path="/liked-post" element={<LikedPosts />} />
 					<Route path="/saved" element={<Saved />} />
 					<Route path="/profile" element={<Profile />} />
